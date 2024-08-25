@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import UserRegistrationForm
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 def home(request):
     return render(request, 'home.html')
@@ -37,3 +38,8 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+def dashboard_view(request):
+    return render(request, 'home.html')
