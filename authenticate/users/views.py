@@ -16,7 +16,7 @@ def register_user(request):
             user.set_password(form.cleaned_data['password'])
             user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
@@ -30,7 +30,7 @@ def login_user(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('dashboard')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -41,5 +41,6 @@ def logout_user(request):
 
 
 @login_required
-def dashboard_view(request):
-    return render(request, 'home.html')
+def dashboard(request):
+    return render(request, 'dashboard.html')
+

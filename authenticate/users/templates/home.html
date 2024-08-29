@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Welcome to your dashboard, {{ request.user.username }}!</h1>
-    <p>Your email is: {{ request.user.email }}</p>
+    <h1>Home Page</h1>
 
-    <!-- Add other dashboard content here -->
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">go to dashboard</a>
+    {% else %}
+        <a href="{% url 'register' %}">register</a>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+
 </body>
 </html>
