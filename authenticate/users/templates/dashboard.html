@@ -9,6 +9,6 @@
     <h1>Welcome to your dashboard, {{ request.user.username }}!</h1>
     <p>Your email is: {{ request.user.email }}</p>
 
-    <!-- Add other dashboard content here -->
+    <a href="{% url 'logout' %}">logout</a>
 </body>
 </html>
