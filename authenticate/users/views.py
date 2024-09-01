@@ -3,7 +3,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import EmailUpdateForm
 
 def home(request):
     return render(request, 'home.html')
@@ -44,3 +46,16 @@ def logout_user(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+
+@login_required
+def update_email(request):
+    if request.method == 'POST':
+        form = EmailUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Email updated successfully')
+            return redirect('dashboard')
+    else:
+        form = EmailUpdateForm(instance=request.user)    
+        
+    return render(request, 'update_email.html', {'form': form})
