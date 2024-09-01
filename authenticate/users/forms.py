@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -33,3 +34,9 @@ class EmailUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EmailUpdateForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True  # Make sure the email field is required
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email.endswith('@gmail.com'):
+            raise ValidationError("use gmail")
+        return email
