@@ -23,3 +23,13 @@ class UserRegistrationForm(forms.ModelForm):
 
         if password != password_confirmation:
             raise ValidationError("Passwords do not match.")
+
+
+class EmailUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email']
+
+    def __init__(self, *args, **kwargs):
+        super(EmailUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True  # Make sure the email field is required
